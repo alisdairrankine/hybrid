@@ -28,9 +28,6 @@ func NewSpriteSheet(filename string, spriteSize int32) (*Spritesheet, error) {
 	for i := int32(0); i < count; i++ {
 		x := (i % (surface.W / spriteSize))
 		y := (i / (surface.W / spriteSize))
-		if i < 30 {
-			fmt.Printf("%d: (%d,%d) \n", i, x, y)
-		}
 		r := sdl.Rect{
 			W: spriteSize,
 			H: spriteSize,
