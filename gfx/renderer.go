@@ -3,6 +3,7 @@ package gfx
 import (
 	"fmt"
 
+	"github.com/alisdairrankine/hybrid/game"
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -16,7 +17,7 @@ type Renderer struct {
 	tilemap     *Tilemap
 }
 
-func NewRenderer(title string, width, height int32) (*Renderer, error) {
+func NewRenderer(title string, width, height int32, isFullScreen bool) (*Renderer, error) {
 
 	err := sdl.Init(sdl.INIT_EVERYTHING)
 	if err != nil {
@@ -26,7 +27,12 @@ func NewRenderer(title string, width, height int32) (*Renderer, error) {
 	if i := img.Init(img.INIT_PNG); i != img.INIT_PNG {
 		return nil, fmt.Errorf("could not initialise image libraries")
 	}
+
 	window, err := sdl.CreateWindow(title, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, width, height, sdl.WINDOW_SHOWN)
+
+	if isFullScreen {
+		window.SetFullscreen(sdl.WINDOW_FULLSCREEN)
+	}
 
 	if err != nil {
 		return nil, fmt.Errorf("could not create window: %s", err)
@@ -54,7 +60,7 @@ func NewRenderer(title string, width, height int32) (*Renderer, error) {
 	return rnd, nil
 }
 
-func (r *Renderer) Render() error {
+func (r *Renderer) Render(entities []game.Entity, ui *UI) error {
 	surface, err := r.window.GetSurface()
 	if err != nil {
 		return err
