@@ -1,0 +1,44 @@
+{
+    "races": [
+        {
+            "name": "rat",
+            "attributes": [
+                "tiny",
+                "defensive",
+                "dumb",
+                "animal"
+            ],
+            "sprite": "rat.png"
+        },
+        {
+            "name": "maintenance_bot",
+            "attributes": [
+                "small",
+                "passive",
+                "dumb",
+                "bot"
+            ],
+            "sprite": "maintenance_bot.png"
+        },
+        {
+            "name": "security_bot",
+            "attributes": [
+                "medium",
+                "defensive",
+                "smart",
+                "bot"
+            ],
+            "sprite": "security_bot.png"
+        },
+        {
+            "name": "military_bot",
+            "attributes": [
+                "large",
+                "aggressive",
+                "smart",
+                "bot"
+            ],
+            "sprite": "military_bot.png"
+        }
+    ]
+}

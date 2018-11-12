@@ -1,0 +1,17 @@
+{
+    "language":"en_GB",
+    "translations":{
+        "menu_settings":"Settings",
+        "menu_settings_keys":"Keyboard Mapping",
+
+        "menu_settings_keys_up":"Up",
+        "menu_settings_keys_down":"Down",
+        "menu_settings_keys_left":"Left",
+        "menu_settings_keys_right":"Right",
+        "menu_settings_keys_attack":"Attack",
+        "menu_settings_keys_inventory":"Open Inventory Screen",
+        "menu_settings_keys_character":"Open Inventory Screen",
+        
+        "menu_inventory":"Inventory"
+    }
+}

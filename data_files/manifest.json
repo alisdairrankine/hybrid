@@ -1,0 +1,18 @@
+{
+    "version":"hybrid/1.0",
+    "languages": [
+        "localisation/en_GB.json"
+    ],
+    "races": [
+        "races.json"
+    ],
+    "items": [
+        "items.json"
+    ],
+    "levels":[
+        "levels.json"
+    ],
+    "spritesheets":[
+        "spritesheets.json"
+    ]
+}
