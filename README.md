@@ -26,5 +26,4 @@ There are currently no facilities for scripting in-game events.
 
 ### Language Sets
 
-Translations for the UI are stored within a language set file
-
+Translations for the UI are stored within a language set file.

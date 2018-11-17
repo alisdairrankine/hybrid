@@ -17,12 +17,12 @@ type Game struct {
 	monsters     []game.Entity
 }
 
-func NewGame(s *data.Settings) (*Game, error) {
+func NewGame(s *data.Settings, gamepack *data.GamePack) (*Game, error) {
 	eventHandler, err := events.NewHandler(s)
 	if err != nil {
 		return nil, err
 	}
-	renderer, err := gfx.NewRenderer("Hybrid", s.ScreenWidth, s.ScreenHeight, s.Fullscreen)
+	renderer, err := gfx.NewRenderer("Hybrid", s.ScreenWidth, s.ScreenHeight, s.Fullscreen, gamepack)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +32,11 @@ func NewGame(s *data.Settings) (*Game, error) {
 		renderer:     renderer,
 		ui:           gfx.NewUI(s),
 		monsters:     []game.Entity{},
-		player:       &game.Entity{},
+		player: &game.Entity{
+			Name: "Ali The great",
+			X:    20,
+			Y:    10,
+		},
 	}
 
 	return g, nil
@@ -41,20 +45,34 @@ func NewGame(s *data.Settings) (*Game, error) {
 func (g *Game) Run() {
 	defer g.renderer.Close()
 	tick := time.Tick(16 * time.Millisecond)
-
+	lastTime := time.Now()
 	for {
+		delta := time.Since(lastTime)
+		lastTime = time.Now()
+		moveRate := int32(240 * delta.Seconds())
+		XMove := int32(0)
+		YMove := int32(0)
 		select {
 		case <-tick:
-			event := g.eventHandler.PollForEvents()
-			if event != nil {
+			events := g.eventHandler.PollForEvents()
+			for _, event := range events {
 				switch event.Type {
 				case "quit":
 					return
 				case "inventory":
 					g.ui.ToggleInventory()
-
+				case "up":
+					YMove--
+				case "down":
+					YMove++
+				case "left":
+					XMove--
+				case "right":
+					XMove++
 				}
 			}
+			g.player.X += XMove * moveRate
+			g.player.Y += YMove * moveRate
 			g.renderer.Render(append(g.monsters, *g.player), g.ui)
 		}
 	}

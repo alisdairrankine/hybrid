@@ -5,6 +5,7 @@ import (
 	"github.com/alisdairrankine/hybrid/game"
 
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 type UI struct {
@@ -28,19 +29,24 @@ func (ui *UI) ToggleCharacterScreen() {
 	ui.characterScreen = !ui.characterScreen
 }
 
-func (ui *UI) Render(surface *sdl.Surface, player *game.Entity) {
+func (ui *UI) Render(surface *sdl.Surface, player *game.Entity, font *ttf.Font) {
 	if ui.inventoryScreen {
-		ui.renderInventoryScreen(surface, player)
+		ui.renderInventoryScreen(surface, player, font)
 	}
 	if ui.characterScreen {
-		ui.renderCharacterScreen(surface, player)
+		ui.renderCharacterScreen(surface, player, font)
+	}
+
+	if player != nil {
+		text, _ := font.RenderUTF8Solid(player.Name, sdl.Color{R: 255, G: 255, B: 255, A: 255})
+		text.Blit(nil, surface, &sdl.Rect{X: 10, Y: 10})
 	}
 }
 
-func (ui *UI) renderInventoryScreen(surface *sdl.Surface, player *game.Entity) {
+func (ui *UI) renderInventoryScreen(surface *sdl.Surface, player *game.Entity, font *ttf.Font) {
 
 }
 
-func (ui *UI) renderCharacterScreen(surface *sdl.Surface, player *game.Entity) {
+func (ui *UI) renderCharacterScreen(surface *sdl.Surface, player *game.Entity, font *ttf.Font) {
 
 }

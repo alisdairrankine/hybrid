@@ -1,18 +1,19 @@
 {
     "version":"hybrid/1.0",
     "languages": [
-        "localisation/en_GB.json"
+        "data_files/localisation/en_GB.json"
     ],
     "races": [
-        "races.json"
+        "data_files/races.json"
     ],
     "items": [
-        "items.json"
+        "data_files/items.json"
     ],
     "levels":[
-        "levels.json"
+        "data_files/levels.json"
     ],
     "spritesheets":[
-        "spritesheets.json"
+        "data_files/spritesheets/player.json",
+        "data_files/spritesheets/terrain.json"
     ]
 }

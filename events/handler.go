@@ -14,45 +14,49 @@ func NewHandler(s *data.Settings) (*Handler, error) {
 	return handler, nil
 }
 
-func (h *Handler) PollForEvents() *Event {
+func (h *Handler) PollForEvents() []Event {
+	events := h.checkMovement()
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 		switch event.(type) {
 		case *sdl.QuitEvent:
-			return &Event{Type: "quit"}
+			return []Event{Event{Type: "quit"}}
 		case *sdl.KeyboardEvent:
 			e := event.(*sdl.KeyboardEvent)
-			return h.translateKeyToEvent(e)
+			event := h.translateKeyToEvent(e)
+			if event != nil {
+				events = append(events, *event)
+			}
 		}
 	}
-	return nil
+	return events
+}
+
+func (h *Handler) checkMovement() []Event {
+	events := []Event{}
+	state := sdl.GetKeyboardState()
+
+	for key, on := range state {
+		if on > 0 {
+			switch sdl.GetKeyFromScancode(sdl.Scancode(key)) {
+			case h.settings.KeyUp:
+				events = append(events, Event{Type: "up"})
+			case h.settings.KeyDown:
+				events = append(events, Event{Type: "down"})
+			case h.settings.KeyLeft:
+				events = append(events, Event{Type: "left"})
+			case h.settings.KeyRight:
+				events = append(events, Event{Type: "right"})
+			case h.settings.KeyAttack:
+				events = append(events, Event{Type: "attack"})
+			}
+		}
+	}
+	return events
 }
 
 func (h *Handler) translateKeyToEvent(e *sdl.KeyboardEvent) *Event {
-	switch e.Keysym.Sym {
-	case h.settings.KeyInventory:
-		if e.State == sdl.RELEASED {
-			return &Event{Type: "inventory"}
-		}
-	case h.settings.KeyUp:
-		if e.State == sdl.PRESSED {
-			return &Event{Type: "up"}
-		}
-	case h.settings.KeyDown:
-		if e.State == sdl.PRESSED {
-			return &Event{Type: "down"}
-		}
-	case h.settings.KeyLeft:
-		if e.State == sdl.PRESSED {
-			return &Event{Type: "left"}
-		}
-	case h.settings.KeyRight:
-		if e.State == sdl.PRESSED {
-			return &Event{Type: "right"}
-		}
-	case h.settings.KeyAttack:
-		if e.State == sdl.PRESSED {
-			return &Event{Type: "attack"}
-		}
+	if h.settings.KeyInventory == e.Keysym.Sym && e.State == sdl.RELEASED {
+		return &Event{Type: "inventory"}
 	}
 	return nil
 }

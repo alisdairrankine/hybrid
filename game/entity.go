@@ -6,8 +6,8 @@ type Entity struct {
 
 	Race Race `json:"race,omitempty"`
 
-	X int32 `json:"-,omitempty"`
-	Y int32 `json:"-,omitempty"`
+	X int32 `json:"-"`
+	Y int32 `json:"-"`
 
 	MaxHealth  int32 `json:"max_health,omitempty"`
 	Health     int32 `json:"health,omitempty"`

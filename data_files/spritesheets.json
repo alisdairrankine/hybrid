@@ -1,8 +1,0 @@
-{
-    "spritesheets":{
-        "terrain":{
-            "file":"terrain.png",
-            "size":32
-        }
-    }
-}
